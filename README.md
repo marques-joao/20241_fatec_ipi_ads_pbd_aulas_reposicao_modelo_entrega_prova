@@ -1,2 +1,2 @@
-Nomes dos integrantes completos e sem abreviações e seus RAS
-Somente serão considerados os integrantes que tiverem ingressado com, no máximo, 30 minutos de atraso
+## João Vitor Marques Pereira - 2040482213024
+## Raphael Carvalho Lima - 2040482213035
