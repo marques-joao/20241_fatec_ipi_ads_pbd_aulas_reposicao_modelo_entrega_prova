@@ -42,6 +42,23 @@ CREATE TABLE student_prediction (
 -- 2 Resultado em função da formação dos pais
 --escreva a sua solução aqui
 
+DO $$
+    DECLARE
+        cur_alunos_aprovados_pai_phd REFCURSOR;
+        v_alunos INT;
+    BEGIN
+        OPEN cur_alunos_aprovados_pai_phd FOR 
+        SELECT count(studentid) FROM student_prediction WHERE grade > 0 AND (mother_edu=6 OR father_edu=6);
+
+    LOOP 
+        FETCH cur_alunos_aprovados_pai_phd INTO v_alunos;
+        EXIT WHEN NOT FOUND;
+        RAISE NOTICE '%', v_alunos;
+    END LOOP;
+
+    CLOSE cur_alunos_aprovados_pai_phd;
+
+END;$$
 
 -- ----------------------------------------------------------------
 -- 3 Resultado em função dos estudos
