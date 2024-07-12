@@ -100,7 +100,26 @@ END;$$
 -- 4 Salário versus estudos
 --escreva a sua solução aqui
 
+DO $$
+    DECLARE
+        -- 1. Declaração
+        cur_aluno_salario_estudos CURSOR FOR 
+        SELECT count(studentid) FROM student_prediction WHERE prep_exam = 2 AND salary = 5;
+        v_alunos INT;
+    BEGIN
+        -- 2. Abertura
+        OPEN cur_aluno_salario_estudos;
 
+        LOOP
+            -- 3. Recuperação
+            FETCH cur_aluno_salario_estudos INTO v_alunos;
+            EXIT WHEN NOT FOUND;
+            RAISE NOTICE '%', v_alunos;
+        END LOOP;
+
+        -- 4. Fechamento do cursor
+        CLOSE cur_aluno_salario_estudos;
+END;$$
 
 -- ----------------------------------------------------------------
 -- 5. Limpeza de valores NULL
