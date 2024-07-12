@@ -125,4 +125,35 @@ END;$$
 -- 5. Limpeza de valores NULL
 --escreva a sua solução aqui
 
+DO $$
+    DECLARE
+        -- não vinculado
+        cur_nulos REFCURSOR;
+        v_tupla RECORD;
+    BEGIN
+        -- 2. Abertura do cursor
+        OPEN cur_nulos SCROLL FOR 
+        SELECT * FROM student_prediction;
+
+        LOOP
+            -- 3. Recuperação dos dados
+            FETCH cur_nulos INTO v_tupla;
+            EXIT WHEN NOT FOUND;
+            
+            IF v_tupla IS NULL THEN
+                DELETE FROM student_prediction WHERE CURRENT OF cur_nulos;
+            END IF;
+
+        END LOOP;
+
+        LOOP
+            FETCH BACKWARD FROM cur_nulos INTO v_tupla;
+            EXIT WHEN NOT FOUND;
+            RAISE NOTICE '%', v_tupla;
+        END LOOP;
+
+    CLOSE cur_nulos;
+
+END;$$
+
 -- ----------------------------------------------------------------
