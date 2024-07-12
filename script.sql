@@ -75,7 +75,7 @@ DO $$
         OPEN cur_alunos_aprovados_sozinho FOR EXECUTE 
         format(
             '
-                SELECT count(studentid) FROM %s WHERE grade > 0 AND partner = 2 
+                SELECT count(studentid) FROM %s WHERE grade > 0 AND prep_study = 1 
             ',
             v_nome_tabela
         ) USING v_alunos;
@@ -99,6 +99,7 @@ END;$$
 -- ----------------------------------------------------------------
 -- 4 Salário versus estudos
 --escreva a sua solução aqui
+
 
 
 -- ----------------------------------------------------------------
