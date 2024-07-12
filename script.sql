@@ -64,6 +64,37 @@ END;$$
 -- 3 Resultado em função dos estudos
 --escreva a sua solução aqui
 
+DO $$
+    DECLARE
+        -- 1. Declaração
+        cur_alunos_aprovados_sozinho REFCURSOR;
+        v_alunos INT;
+        v_nome_tabela VARCHAR(200) := 'student_prediction';
+    BEGIN
+        -- 2. Abertura
+        OPEN cur_alunos_aprovados_sozinho FOR EXECUTE 
+        format(
+            '
+                SELECT count(studentid) FROM %s WHERE grade > 0 AND partner = 2 
+            ',
+            v_nome_tabela
+        ) USING v_alunos;
+
+        LOOP
+            -- 3. Recuperação
+            FETCH cur_alunos_aprovados_sozinho INTO v_alunos;
+            EXIT WHEN NOT FOUND;
+
+            IF v_alunos IS NULL THEN
+                RAISE NOTICE '-1';
+            END IF;
+
+            RAISE NOTICE '%', v_alunos;
+        END LOOP;
+
+        -- 4. Fechamento do cursor
+        CLOSE cur_alunos_aprovados_sozinho;
+END;$$
 
 -- ----------------------------------------------------------------
 -- 4 Salário versus estudos
